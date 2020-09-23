@@ -4,8 +4,9 @@ adaptor=$(ip addr | grep wlan1)
 NOW=$(date +"%m-%d-%y-%H%M%S")
 
 # Make sure we have correct settings in /etc/kismet/kismet.conf
-sed -i 's/# logprefix=\/some\/path\/to\/logs/logprefix=\/captures\/kismet/g' /etc/kismet/kismet.conf
-sed -i 's/# ncsource=wlan0/ncsource=wlan1/g' /etc/kismet/kismet.conf
+sed -i 's/log_prefix=.\//log_prefix=\/captures\//g' /etc/kismet/kismet_logging.conf
+sed -i 's/# source=wlan0/source=wlan1/g' /etc/kismet/kismet.conf
+sed -i 's/source=wlan1:name=ath9k/# source=wlan0:name=ath9k/g' /etc/kismet/kismet.conf
 
 f_check_dbus(){
 if DBUS=$(pgrep dbus)

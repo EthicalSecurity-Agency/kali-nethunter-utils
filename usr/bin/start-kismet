@@ -4,7 +4,7 @@ adaptor=$(ip addr | grep wlan1)
 NOW=$(date +"%m-%d-%y-%H%M%S")
 
 # Make sure we have correct settings in /etc/kismet/kismet.conf
-sed -i 's/log_prefix=.\//log_prefix=\/captures\//g' /etc/kismet/kismet_logging.conf
+sed -i 's/log_prefix=.\//log_prefix=\/captures\/kismet\//g' /etc/kismet/kismet_logging.conf
 sed -i '0,/# source=wlan0/s//source=wlan1/' /etc/kismet/kismet.conf
 sed -i 's/# gps=gpsd:host=localhost,port=2947/gps=gpsd:host=localhost,port=2947/g' /etc/kismet/kismet.conf
 

@@ -4,8 +4,9 @@ adaptor=$(ip addr | grep wlan1)
 NOW=$(date +"%m-%d-%y-%H%M%S")
 
 # Make sure we have correct settings in /etc/kismet/kismet.conf
-sed -i 's/# logprefix=\/some\/path\/to\/logs/logprefix=\/captures\/kismet/g' /etc/kismet/kismet.conf
-sed -i 's/# ncsource=wlan0/ncsource=wlan1/g' /etc/kismet/kismet.conf
+sed -i 's/log_prefix=.\//log_prefix=\/captures\/kismet\//g' /etc/kismet/kismet_logging.conf
+sed -i '0,/# source=wlan0/s//source=wlan1/' /etc/kismet/kismet.conf
+sed -i 's/# gps=gpsd:host=localhost,port=2947/gps=gpsd:host=localhost,port=2947/g' /etc/kismet/kismet.conf
 
 f_check_dbus(){
 if DBUS=$(pgrep dbus)
@@ -43,21 +44,10 @@ f_kismet(){
     kismet -t Kismet-$NOW; --use-gpsd-gps # -t = Title of logfile
 }
 
-f_giskismet(){
+f_kismetdb_to_kml(){
     clear
-    # create database folder or check if one exsists
-    if [ ! -d "/captures/kismet/db" ]; then
-        mkdir -p "/captures/kismet/db"
-    fi
-    # process all netxml files (duplicated are ignored)
-    cd /captures/kismet/
-    for capture in $(find . -iname '*.netxml'); do
-        echo "Adding $capture to datbase"
-        sleep 5
-        giskismet -x "$capture" --database "/captures/kismet/db/wireless.dbl"
-    done
     # export kml of all wireless data and copy files to sdcard
-    giskismet --database "/captures/kismet/db/wireless.dbl" -q "select * from wireless" -o "/captures/kismet/Kismet-$NOW.kml"
+kismetdb_to_kml --in /captures/kismet/Kismet-$NOW.kismet --out "/captures/kismet/Kismet-$NOW.kml"
 }
 
 f_kismet_save(){
@@ -74,10 +64,6 @@ read -p "Would you like to secure erase all Kismet session files in /captures fo
 if [ "$ERASEKISMET" == "y" ]; then
     echo "Removing capture files..."
     wipe -f -i -r /captures/kismet/Kismet-$NOW*
-fi
-read -p "Erase kismet database? (y/n): " ERASEDB
-if [ "$ERASEDB" == "y" ]; then
-    wipe -f -i -r /captures/kismet/db/wireless.dbl
 fi
 }
 
@@ -99,7 +85,7 @@ f_checkwlan1
 #  And I think it's gonna be a long long time...
 
 f_kismet
-f_giskismet
+f_kismetdb_to_kml
 f_kismet_save
 
 # Till touch down brings me round again to find

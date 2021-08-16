@@ -1,4 +1,5 @@
-#!/usr/bin/python
+#!/usr/bin/python2
+
 import argparse
 import sys
 sys.path.append("/sdcard/nh_files/modules/")

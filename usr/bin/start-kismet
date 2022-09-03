@@ -53,7 +53,6 @@ sleep 5
 #  Zero hour nine a.m.
 
 f_check_dbus
-#f_checkwlan1
 
 #  And I think it's gonna be a long long time...
 

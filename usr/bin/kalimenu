@@ -1,5 +1,5 @@
 #!/bin/bash
-#
+
 ## date format ##
 NOW=$(date +"%m-%d-%y-%H%M%S")
 DEVICE=$(cat /system/build.prop | grep -E 'product.device=' | cut -d"=" -f2)
@@ -55,7 +55,7 @@ f_wlan1check
 echo "				WIRELESS ATTACKS MAIN MENU"
 echo ""
 echo ""
-echo "[1]	Wifite - Auotmated Wireless Auditor"
+echo "[1]	Wifite - Automated Wireless Auditor"
 echo "[2]	Kismet - Wireless network detector, sniffer, IDS"
 echo "[3]	AP F**ker - Wireless attack multitool"
 echo "[4]	Wash -  Scan for WPS enabled routers"
@@ -110,7 +110,7 @@ else
 	    if  [ -n "$wlanstat" ] ; then
 	    	airmon-ng start wlan1
 	    else
-		    echo "You must plug in a compatible wifi card to use this feature."
+		    echo "You must plug in a compatible Wi-Fi card to use this feature."
 		    echo ""
 		    read -p "Press [Enter] to return to the main menu." null
 		    clear
@@ -133,7 +133,7 @@ echo "[3] Capture all WPA and crack (WARNING: can cause overheating + power loss
 echo "[4] Capture all WPA"
 echo "[5] Attack WPS with power over 40+"
 echo ""
-echo "[0] Exit to Wirelss Attack Menu"
+echo "[0] Exit to Wireless Attack Menu"
 echo ""
 echo -n "Enter your menu choice [1-3]: "
 read yourch
@@ -389,8 +389,8 @@ f_information_gathering
 f_vulnerability(){
 if [ ! -d "/var/lib/openvas/" ]; then
 	clear
-	echo "Openvas is not currently installed.  The installation can take a few hours."
-	read -p "Would you like to install OpenVas (1GB+ space needed)? (y/n): " installopenvas
+	echo "OpenVAS is not currently installed.  The installation can take a few hours."
+	read -p "Would you like to install OpenVAS (1GB+ space needed)? (y/n): " installopenvas
 		if [ "$installopenvas" == "y" ]; then
 			apt-get update
 			apt-get dist-upgrade
@@ -402,9 +402,9 @@ clear
 echo "				VULNERABILITY MENU"
 echo ""
 echo ""
-echo "[1] Start Openvas (https://127.0.0.1:9392)"
-echo "[2] Stop Openvas"
-echo "[3] Update OpenVas Feeds"
+echo "[1] Start OpenVAS (https://127.0.0.1:9392/)"
+echo "[2] Stop OpenVAS"
+echo "[3] Update OpenVAS Feeds"
 echo ""
 echo "[0] Exit to main menu"
 echo ""
@@ -425,16 +425,16 @@ clear
 echo "				EXPLOITATION MAIN MENU"
 echo ""
 echo ""
-echo "[1]	Metasploit"
-echo "[2]	Beef-XSS"
-echo "[3]	Social-Engineering Toolkit"
+echo "[1]	Metasploit-Framework"
+echo "[2]	BeEF-XSS"
+echo "[3]	Social-Engineering Toolkit (SET)"
 echo ""
 echo "[0]	Exit to main menu"
 echo ""
 read -p "Choice: " webchoice
 
 case $webchoice in
-1) clear; echo "Msfconsole may take up to 5 minutes to load, please wait..."; service postgresql start; msfdb init; msfconsole; f_exploitation ;;
+1) clear; echo "msfconsole may take up to 5 minutes to load, please wait..."; service postgresql start; msfdb init; msfconsole; f_exploitation ;;
 2) clear; service beef-xss start; echo "Open browser to http://127.0.0.1:3000/ui/panel (beef/beef)"; sleep 8; f_exploitation ;;
 3) clear; setoolkit ; f_exploitation ;;
 4) clear; trap 'f_exploitation' 2; f_mitmf ;;
@@ -606,7 +606,7 @@ echo ""
 echo "[3] Start OpenVPN Server"
 echo "[4] Stop OpenVPN Server"
 echo ""
-echo "[5] Start XServer on localhost (Android Applicaiton XServer XSDL)"
+echo "[5] Start XServer on localhost (Android Application XServer XSDL)"
 echo ""
 echo "[0] Exit to main menu"
 echo ""
@@ -616,7 +616,7 @@ case $serviceschoice in
 1) clear; f_vncstart ;;
 2) clear; f_vnckill ;;
 3) clear; f_startvpn ;;
-4) clear; service openvpn stop ; iptables -F ; iptables -X ; echo "Stopping Openvpn" ;;
+4) clear; service openvpn stop ; iptables -F ; iptables -X ; echo "Stopping OpenVPN" ;;
 5) clear; DISPLAY=127.0.0.1:0.0 startxfce4; echo "Server started on localhost to be used with Xserver XSDL application" ;;
 0) f_interface ;;
 *) echo "Incorrect choice..." ;
@@ -957,8 +957,8 @@ f_hid_dic(){
 clear
 cd /opt/dic
 echo "Pick a Dictionary: " dictselect
-echo "[1] Common Passwords - Will bruteforce common password followed by return key"
-echo "[2] 4 digit PIN Numbers - Will bruteforce 4 digit pins followed by return key"
+echo "[1] Common Passwords - Will brute-force common password followed by return key"
+echo "[2] 4 digit PIN Numbers - Will brute-force 4 digit pins followed by return key"
 echo ""
 echo "[0] Back to HID Menu"
 echo ""
@@ -1076,8 +1076,8 @@ done
 }
 
 f_mifarewrite(){
-# This script will write previously cloned Mifare cards to a blank/rewriteable card.
-# Options are provided for card type (non-UID/UID writable) and key type (A/B).
+# This script will write previously cloned Mifare cards to a blank/rewritable card.
+# Options are provided for card type (non-UID/UID writeable) and key type (A/B).
 # Tested using a SCL3711 usb dongle.
 
 clear
@@ -1119,7 +1119,7 @@ done
 f_mon(){
   clear
   echo "Enable or Disable Monitor Mode on wlan1"
-  echo "[1] Enable moitor mode"
+  echo "[1] Enable monitor mode"
   echo "[2] Disable monitor mode"
   echo ""
   echo "[0] Main Menu"
@@ -1136,7 +1136,7 @@ f_mon(){
   f_interface
 }
 
-######################### SAFELY EJECT WIFI ############################
+######################### SAFELY EJECT WI-FI ############################
 f_safeeject(){
   clear
   echo "Stopping Services. Please Wait."
@@ -1144,7 +1144,7 @@ f_safeeject(){
   ifconfig wlan1 down
   sleep 8
   clear
-  echo "You should now be able to safely remove your wifi card."
+  echo "You should now be able to safely remove your Wi-Fi card."
   echo ""
   read -p "Press [Enter] to return to the main menu" null
   f_interface

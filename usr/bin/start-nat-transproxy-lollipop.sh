@@ -1,4 +1,5 @@
 #!/bin/bash
+
 upstream=wlan0
 phy=wlan1
 conf=/sdcard/nh_files/configs/hostapd-karma.conf

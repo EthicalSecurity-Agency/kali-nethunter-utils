@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 #
 # A simple Python script to convert csv files to sqlite (with type guessing)
 #
